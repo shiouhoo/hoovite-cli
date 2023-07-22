@@ -1,0 +1,25 @@
+{
+  "name": "hoo-vite",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vite",
+    "脚手架"
+  ],
+  "type": "module",
+  "author": "shiouhoo",
+  "license": "MIT",
+  "bin": {
+    "create-hoo-vite": "index.js"
+  },
+  "dependencies": {
+    "download-git-repo": "^3.0.2",
+    "inquirer": "^9.2.8",
+    "minimist": "^1.2.8",
+    "spinner": "^0.3.4"
+  }
+}
