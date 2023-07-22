@@ -1,19 +1,28 @@
 import inquirer from 'inquirer';
 import fs from 'fs';
 
+function isValidPackageName(projectName) {
+	return /^(?:@[a-z\d\-*~][a-z\d\-*._~]*\/)?[a-z\d\-~][a-z\d\-._~]*$/.test(
+		projectName,
+	)
+}
+
 export const userOptions = async (defaultProjectName, defaultTemplateName) => {
 	const answers = await inquirer.prompt([
 		{
-			type: 'text',
+			type: 'input',
 			name: 'projectName',
 			message: '项目名称:',
 			default: defaultProjectName,
 			filter(state) {
 				return state.trim() || defaultProjectName
 			},
-			when() {
-				return !defaultProjectName
-			},
+			validate(state) {
+				if (isValidPackageName(state)) {
+					return true;
+				}
+				return '项目名称不合法！'
+			}
 		},
 		{
 			type: 'confirm',
@@ -25,7 +34,7 @@ export const userOptions = async (defaultProjectName, defaultTemplateName) => {
 		},
 		//如果上一步选择删除为 false 退出
 		{
-			type: 'text',
+			type: 'input',
 			name: 'overwriteChecker',
 			when(answers) {
 				if (answers.overwrite === false) {

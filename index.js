@@ -6,6 +6,7 @@ import downLoad from 'download-git-repo';
 import { spinner } from './spinner.js';
 import path from 'path'
 import fs from 'fs'
+import { fileURLToPath } from "url";
 
 const argv = minimist(process.argv.slice(2));
 
@@ -38,22 +39,22 @@ const init = async () => {
     try {
         await userOptions(projectName, defaultTemplateName).then(option => {
             const { templateName, projectName } = option
-            // spinner.start();
+            spinner.start();
             const __dirname = path.resolve();
-            const templateDir = path.join(__dirname, `template-${templateName}`);
-            console.log(templateDir, process.cwd());
-            // copyDir('./hh', path.join(__dirname))
-            // downLoad('direct:' + templates[templateName].downloadSrc, projectName, { clone: true }, (err) => {
-            //     if (err) {
-            //         spinner.fail();
-            //         console.log(err);
-            //     } else {
-            //         spinner.succeed();
-            //         console.log('下载成功');
-            //     }
-            // });
+            const templateDir = path.join(path.dirname(fileURLToPath(import.meta.url)), `template-${templateName}`);
+            copyDir(templateDir, path.join(__dirname, projectName));
+
+            const pkg = JSON.parse(
+                fs.readFileSync(path.join(templateDir, `package.json`), 'utf-8'),
+            );
+            pkg.name = projectName;
+            fs.writeFileSync(path.join(__dirname, projectName + '/package.json'), JSON.stringify(pkg, null, 2) + '\n');
+
+            spinner.succeed();
+            console.log('创建成功');
         });
     } catch (e) {
+        spinner.fail();
         console.log('退出', e);
     }
 }
