@@ -1,6 +1,6 @@
 {
-  "name": "hoo-vite",
-  "version": "1.0.0",
+  "name": "create-hoo-vite",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -21,5 +21,9 @@
     "inquirer": "^9.2.8",
     "minimist": "^1.2.8",
     "spinner": "^0.3.4"
-  }
+  },
+  "files": [
+    "template-vite-vue3-ts/*",
+    "/*.js"
+  ]
 }

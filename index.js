@@ -37,22 +37,21 @@ const init = async () => {
         return;
     }
     try {
-        await userOptions(projectName, defaultTemplateName).then(option => {
-            const { templateName, projectName } = option
-            spinner.start();
-            const __dirname = path.resolve();
-            const templateDir = path.join(path.dirname(fileURLToPath(import.meta.url)), `template-${templateName}`);
-            copyDir(templateDir, path.join(__dirname, projectName));
+        const option = await userOptions(projectName, defaultTemplateName)
+        const { templateName, projectName } = option
+        spinner.start();
+        const __dirname = path.resolve();
+        const templateDir = path.join(path.dirname(fileURLToPath(import.meta.url)), `template-${templateName}`);
+        copyDir(templateDir, path.join(__dirname, projectName));
 
-            const pkg = JSON.parse(
-                fs.readFileSync(path.join(templateDir, `package.json`), 'utf-8'),
-            );
-            pkg.name = projectName;
-            fs.writeFileSync(path.join(__dirname, projectName + '/package.json'), JSON.stringify(pkg, null, 2) + '\n');
+        const pkg = JSON.parse(
+            fs.readFileSync(path.join(templateDir, `package.json`), 'utf-8'),
+        );
+        pkg.name = projectName;
+        fs.writeFileSync(path.join(__dirname, projectName + '/package.json'), JSON.stringify(pkg, null, 2) + '\n');
 
-            spinner.succeed();
-            console.log('创建成功');
-        });
+        spinner.succeed();
+        console.log('创建成功');
     } catch (e) {
         spinner.fail();
         console.log('退出', e);
