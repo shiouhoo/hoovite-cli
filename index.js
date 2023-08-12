@@ -10,7 +10,7 @@ import { fileURLToPath } from "url";
 
 const argv = minimist(process.argv.slice(2));
 
-const projectName = argv._[0]
+const defaultProjectName = argv._[0]
 const defaultTemplateName = typeof argv.t !== 'boolean' ? argv.t : ""
 
 function copy(src, dest) {
@@ -37,7 +37,7 @@ const init = async () => {
         return;
     }
     try {
-        const option = await userOptions(projectName, defaultTemplateName)
+        const option = await userOptions(defaultProjectName, defaultTemplateName)
         const { templateName, projectName } = option
         spinner.start();
         const __dirname = path.resolve();

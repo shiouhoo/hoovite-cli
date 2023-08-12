@@ -2,6 +2,7 @@ import inquirer from 'inquirer';
 import fs from 'fs';
 
 function isValidPackageName(projectName) {
+	if(!projectName) return false
 	return /^(?:@[a-z\d\-*~][a-z\d\-*._~]*\/)?[a-z\d\-~][a-z\d\-._~]*$/.test(
 		projectName,
 	)
@@ -64,7 +65,7 @@ export const userOptions = async (defaultProjectName, defaultTemplateName) => {
 			message: '请选择你的模版',
 			default: 'vite-vue3-ts',
 			choices: [
-				{ name: 'vite-vue3-ts', value: 'vite-vue3-ts' },
+				{ name: 'vite-vue3-ts (eslint)', value: 'vite-vue3-ts' },
 			],
 			when() {
 				return !defaultTemplateName
