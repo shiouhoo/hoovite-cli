@@ -1,5 +1,6 @@
 import inquirer from 'inquirer';
 import fs from 'fs';
+import path from 'path';
 
 function isValidPackageName(projectName) {
 	if(!projectName) return false
@@ -39,22 +40,7 @@ export const userOptions = async (defaultProjectName, defaultTemplateName) => {
 			name: 'overwriteChecker',
 			when(answers) {
 				if (answers.overwrite === false) {
-					throw new Error(' Operation cancelled');
-				} else {
-					function deleteFolderRecursive(path) {
-						if (fs.existsSync(path)) {
-							fs.readdirSync(path).forEach(function (file) {
-								const curPath = path + "/" + file;
-								if (fs.statSync(curPath).isDirectory()) { // recurse
-									deleteFolderRecursive(curPath);
-								} else { // delete file
-									fs.unlinkSync(curPath);
-								}
-							});
-							fs.rmdirSync(path);
-						}
-					};
-					deleteFolderRecursive(answers.projectName || defaultProjectName);
+					throw new Error('Operation cancelled');
 				}
 				return null;
 			},

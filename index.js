@@ -3,10 +3,12 @@ import templates from './templates.js';
 import { userOptions } from './option.js';
 import minimist from 'minimist'
 import downLoad from 'download-git-repo';
-import { spinner } from './spinner.js';
+import { spinner,clearLoading } from './spinner.js';
 import path from 'path'
 import fs from 'fs'
 import { fileURLToPath } from "url";
+import  { Worker }  from 'worker_threads'
+
 
 const argv = minimist(process.argv.slice(2));
 
@@ -38,7 +40,15 @@ const init = async () => {
     }
     try {
         const option = await userOptions(defaultProjectName, defaultTemplateName)
-        const { templateName, projectName } = option
+        const { templateName, projectName,overwrite } = option
+        if(overwrite){
+            clearLoading.start();
+            await new Promise((resolve, reject) => {
+                const worker = new Worker(`${path.dirname(fileURLToPath(import.meta.url))}/clearDir.js`, { workerData: projectName });
+                worker.on('message', resolve);
+            })
+            clearLoading.succeed();
+        }
         spinner.start();
         const __dirname = path.resolve();
         const templateDir = path.join(path.dirname(fileURLToPath(import.meta.url)), `template-${templateName}`);
@@ -53,8 +63,11 @@ const init = async () => {
         spinner.succeed();
         console.log('创建成功');
     } catch (e) {
+        if(e.message === 'Operation cancelled') {
+            retutn;
+        };
         spinner.fail();
-        console.log('退出', e);
+        console.log('退出', e.message);
     }
 }
 
