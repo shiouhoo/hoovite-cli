@@ -65,7 +65,7 @@ export const userOptions = async (defaultProjectName, defaultTemplateName) => {
 			message: '请选择你的模版',
 			default: 'vite-vue3-ts',
 			choices: [
-				{ name: 'vite-vue3-ts (eslint)', value: 'vite-vue3-ts' },
+				{ name: 'vite-vue3-ts (eslint,commitizen,sass)', value: 'vite-vue3-ts' },
 			],
 			when() {
 				return !defaultTemplateName
