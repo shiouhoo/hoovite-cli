@@ -1,5 +1,6 @@
 import inquirer from 'inquirer';
 import fs from 'fs';
+import { UserOptions } from './types';
 
 function isValidPackageName(projectName) {
     if (!projectName) return false;
@@ -8,8 +9,8 @@ function isValidPackageName(projectName) {
     );
 }
 
-export const userOptions = async () => {
-    const answers = await inquirer.prompt([
+export const userOptions = async (): Promise<UserOptions> => {
+    const answers:UserOptions = await inquirer.prompt([
         {
             type: 'input',
             name: 'projectName',
@@ -47,9 +48,9 @@ export const userOptions = async () => {
             type: 'list',
             name: 'templateName',
             message: '请选择你的模版',
-            default: 'vite-vue3-ts',
+            default: 'vue3-ts',
             choices: [
-                { name: 'vite-vue3-ts (eslint,commitizen,sass)', value: 'vite-vue3-ts' },
+                { name: 'vue3-ts', value: 'vue3-ts' },
             ],
         },
     ]);

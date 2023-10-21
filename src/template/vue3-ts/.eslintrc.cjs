@@ -1,8 +1,11 @@
 /* eslint-env node */
+require('@rushstack/eslint-patch/modern-module-resolution');
+
 module.exports = {
     env: {
-        browser: true,
-        node: true,
+        "browser": true,
+        "es2021": true,
+        "node": true,
     },
     root: true,
     'extends': [
@@ -15,6 +18,5 @@ module.exports = {
         ecmaVersion: 'latest'
     },
     rules: {
-        'no-undef ': 'off'
     }
 };
