@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "build": "rollup -c",
+    "r": "node ./lib/index",
+    "dev": "rollup -c && node ./lib/index"
   },
   "keywords": [
     "vite",
@@ -14,16 +17,25 @@
   "author": "shiouhoo",
   "license": "MIT",
   "bin": {
-    "create-hoo-vite": "index.js"
-  },
-  "dependencies": {
-    "download-git-repo": "^3.0.2",
-    "inquirer": "^9.2.8",
-    "minimist": "^1.2.8",
-    "spinner": "^0.3.4"
+    "create-hoo-vite": "./lib/index.js"
   },
   "files": [
     "template-vite-vue3-ts/*",
-    "/*.js"
-  ]
+    "lib"
+  ],
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@shiouhoo/eslint-config": "^1.0.8",
+    "@types/node": "^20.8.7",
+    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@typescript-eslint/parser": "^6.8.0",
+    "eslint": "^8.52.0",
+    "inquirer": "^9.2.8",
+    "minimist": "^1.2.8",
+    "rollup": "^4.1.4",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "spinner": "^0.3.4",
+    "typescript": "^5.2.2"
+  }
 }

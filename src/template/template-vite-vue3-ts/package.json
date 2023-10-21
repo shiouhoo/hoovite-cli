@@ -42,6 +42,6 @@
     }
   },
   "lint-staged": {
-    "*.{js,ts,vue}": "pnpm lint"
+    "*.{js,ts,vue}": "eslint --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix  --max-warnings=0 --ignore-path .gitignore"
   }
 }
