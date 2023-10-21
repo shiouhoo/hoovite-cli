@@ -28,6 +28,7 @@ export const userOptions = async (): Promise<UserOptions> => {
         {
             type: 'confirm',
             name: 'overwrite',
+            default: true,
             message: `目标文件夹已存在，是否要覆盖?`,
             when(answers) {
                 return fs.existsSync(answers.projectName);
@@ -52,6 +53,15 @@ export const userOptions = async (): Promise<UserOptions> => {
             choices: [
                 { name: 'vue3-ts', value: 'vue3-ts' },
             ],
+        },
+        // 如果上一步选择vue3-ts
+        {
+            type: 'confirm',
+            name: 'unocss',
+            default: true,
+            when(answers) {
+                return answers.templateName === 'vue3-ts';
+            },
         },
     ]);
     return {
