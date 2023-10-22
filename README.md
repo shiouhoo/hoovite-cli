@@ -12,7 +12,7 @@ npm create hoo-vite
 ## 模板列表
 
 #### vue3-ts
-- 必选：eslint，sass，commitlint，husky，lint-staged
+- 必选：eslint，sass，commitlint，husky，lint-staged,自动导入
 - 可选: unocss
 
 ## 反馈

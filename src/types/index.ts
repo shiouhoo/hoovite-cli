@@ -3,4 +3,5 @@ export interface UserOptions {
     overwrite?: boolean,
     templateName: string
     unocss?: boolean
+    uiComponet?: string
 }

@@ -29,7 +29,7 @@ export const userOptions = async (): Promise<UserOptions> => {
             type: 'confirm',
             name: 'overwrite',
             default: true,
-            message: `目标文件夹已存在，是否要覆盖?`,
+            message: `目标文件夹已存在，是否要覆盖？`,
             when(answers) {
                 return fs.existsSync(answers.projectName);
             },
@@ -58,7 +58,19 @@ export const userOptions = async (): Promise<UserOptions> => {
         {
             type: 'confirm',
             name: 'unocss',
+            message: '你是否需要unocss？',
             default: true,
+            when(answers) {
+                return answers.templateName === 'vue3-ts';
+            },
+        },
+        // 如果上一步选择vue3-ts
+        {
+            type: 'list',
+            name: 'uiComponet',
+            message: '是否需要UI组件库',
+            choices: ['不需要', 'element-plus', 'ant-design-vue', 'vant'],
+            default: '不需要',
             when(answers) {
                 return answers.templateName === 'vue3-ts';
             },

@@ -1,5 +1,4 @@
 import { fileURLToPath, URL } from 'node:url';
-
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 
@@ -7,6 +6,16 @@ import vue from '@vitejs/plugin-vue';
 export default defineConfig({
     plugins: [
         vue(),
+        AutoImport({
+            imports: autoImportList,
+            resolvers: autoImporResolvers,
+            dts: 'src/auto-import.d.ts',
+        }),
+        Components({
+            dirs: ['src/components'],
+            resolvers: componentsResolvers,
+            dts: 'src/components.d.ts',
+        })
     ],
     resolve: {
         alias: {
