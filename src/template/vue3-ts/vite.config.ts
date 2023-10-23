@@ -8,12 +8,12 @@ export default defineConfig({
         vue(),
         AutoImport({
             imports: autoImportList,
-            resolvers: autoImporResolvers,
+            resolvers: [autoImporResolvers],
             dts: 'src/auto-import.d.ts',
         }),
         Components({
             dirs: ['src/components'],
-            resolvers: componentsResolvers,
+            resolvers: [componentsResolvers],
             dts: 'src/components.d.ts',
         })
     ],

@@ -24,8 +24,8 @@ export const vueAction = (options: UserOptions, pkg:Record<string, any>, cliPath
     pkg.devDependencies['unplugin-auto-import'] = '^0.16.6';
 
     const autoImportList = ['vue'];
-    const autoImporResolvers = [];
-    const componentsResolvers = [];
+    let autoImporResolvers = '';
+    let componentsResolvers = '';
 
     if(options.unocss) {
         // 修改 package.json
@@ -40,20 +40,19 @@ export const vueAction = (options: UserOptions, pkg:Record<string, any>, cliPath
     }
     if(options.uiComponet === 'element-plus') {
         importConfig += "import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';";
-        autoImporResolvers.push('ElementPlusResolver()');
-        componentsResolvers.push('ElementPlusResolver()');
+        autoImporResolvers += 'ElementPlusResolver()';
+        componentsResolvers += 'ElementPlusResolver()';
         // 修改 package.json
         pkg.dependencies['element-plus'] = '^2.4.1';
         pkg.devDependencies['unplugin-vue-components'] = '^0.25.2';
         // 修改 vite.config.ts
         viteConfig = viteConfig.replace("import { defineConfig } from 'vite';", importConfig);
-        // 改写 main.ts
-        mainFile = mainFile.replace("import App from './App.vue';", "import 'element-plus/dist/index.css';\r\nimport App from './App.vue';");
+
     }else if (options.uiComponet === 'ant-design-vue') {
         importConfig += "import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';";
-        componentsResolvers.push('AntDesignVueResolver()');
+        componentsResolvers += '\r\n                AntDesignVueResolver({\r\n                    importStyle: false\r\n                }),\r\n            ';
         // 修改 package.json
-        pkg.dependencies['ant-design-vue'] = '4.x';
+        pkg.dependencies['ant-design-vue'] = '^4.0.6';
         pkg.devDependencies['unplugin-vue-components'] = '^0.25.2';
         // 修改 vite.config.ts
         viteConfig = viteConfig.replace("import { defineConfig } from 'vite';", importConfig);
@@ -61,8 +60,8 @@ export const vueAction = (options: UserOptions, pkg:Record<string, any>, cliPath
         mainFile = mainFile.replace("import App from './App.vue';", "import 'ant-design-vue/dist/reset.css';\r\nimport App from './App.vue';");
     }
 
-    viteConfig = viteConfig.replace('componentsResolvers', JSON.stringify(componentsResolvers).replaceAll('"', ''));
-    viteConfig = viteConfig.replace('autoImporResolvers', JSON.stringify(autoImporResolvers).replaceAll('"', ''));
+    viteConfig = viteConfig.replace('componentsResolvers', componentsResolvers);
+    viteConfig = viteConfig.replace('autoImporResolvers', autoImporResolvers);
     viteConfig = viteConfig.replace('autoImportList', JSON.stringify(autoImportList).replaceAll('"', '\''));
 
     return { viteConfig, mainFile };
