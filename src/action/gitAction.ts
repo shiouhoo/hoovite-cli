@@ -1,4 +1,4 @@
-import { spawn } from 'child_process';
+import { spawn, ChildProcessWithoutNullStreams } from 'child_process';
 import os from 'os';
 
 /**
@@ -7,11 +7,19 @@ import os from 'os';
  */
 export const gitAction = async (__dirPath:string) => {
 
-    if (os.platform() === 'win32') {
+    return new Promise((resolve) => {
+        let child: ChildProcessWithoutNullStreams;
+        if (os.platform() === 'win32') {
         // Windows
-        spawn('cmd.exe', ['/c', `cd /d ${__dirPath} && git init`]);
-    } else {
+            child = spawn('cmd.exe', ['/c', `cd /d ${__dirPath} && git init`]);
+        } else {
         // macOS 或 Linux
-        spawn('sh', ['-c', `cd "${__dirPath.replaceAll('\\', '/')}" && git init`]);
-    }
+            child = spawn('sh', ['-c', `cd "${__dirPath.replaceAll('\\', '/')}" && git init`]);
+        }
+        child.stdout.on('data', (data) => {
+            // eslint-disable-next-line no-console
+            console.log(`${data}`);
+            resolve('执行成功');
+        });
+    });
 };
