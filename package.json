@@ -20,7 +20,7 @@
     "create-hoo-vite": "./lib/index.js"
   },
   "files": [
-    "template-vite-vue3-ts/*",
+    "src/template/*",
     "lib"
   ],
   "repository": {

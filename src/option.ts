@@ -23,7 +23,7 @@ const vueOptions = [
         type: 'list',
         name: 'uiComponet',
         message: '是否需要UI组件库',
-        choices: ['不需要', 'element-plus', 'ant-design-vue', 'vant'],
+        choices: ['不需要', 'element-plus', 'ant-design-vue'],
         default: '不需要',
         when(answers) {
             return answers.templateName === 'vue3-ts';

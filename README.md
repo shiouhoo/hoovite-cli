@@ -13,7 +13,7 @@ npm create hoo-vite
 
 #### vue3-ts
 - 必选：eslint，sass，commitlint，husky，lint-staged,自动导入
-- 可选: unocss, element-plus, antdV
+- 可选: unocss, element-plus, antdV, pinia, vue-router, axios
 
 ## 反馈
 
