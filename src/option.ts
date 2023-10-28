@@ -9,6 +9,55 @@ function isValidPackageName(projectName) {
     );
 }
 
+const vueOptions = [
+    {
+        type: 'confirm',
+        name: 'unocss',
+        message: '你是否需要unocss？',
+        default: true,
+        when(answers) {
+            return answers.templateName === 'vue3-ts';
+        },
+    },
+    {
+        type: 'list',
+        name: 'uiComponet',
+        message: '是否需要UI组件库',
+        choices: ['不需要', 'element-plus', 'ant-design-vue', 'vant'],
+        default: '不需要',
+        when(answers) {
+            return answers.templateName === 'vue3-ts';
+        },
+    },
+    {
+        type: 'confirm',
+        name: 'vueRouter',
+        message: '你是否需要vue-router？',
+        default: true,
+        when(answers) {
+            return answers.templateName === 'vue3-ts';
+        },
+    },
+    {
+        type: 'confirm',
+        name: 'pinia',
+        message: '你是否需要pinia？',
+        default: true,
+        when(answers) {
+            return answers.templateName === 'vue3-ts';
+        },
+    },
+    {
+        type: 'confirm',
+        name: 'axios',
+        message: '你是否需要axios？',
+        default: true,
+        when(answers) {
+            return answers.templateName === 'vue3-ts';
+        },
+    },
+];
+
 export const userOptions = async (): Promise<UserOptions> => {
     const answers:UserOptions = await inquirer.prompt([
         {
@@ -54,26 +103,13 @@ export const userOptions = async (): Promise<UserOptions> => {
                 { name: 'vue3-ts', value: 'vue3-ts' },
             ],
         },
-        // 如果上一步选择vue3-ts
-        {
-            type: 'confirm',
-            name: 'unocss',
-            message: '你是否需要unocss？',
-            default: true,
-            when(answers) {
-                return answers.templateName === 'vue3-ts';
-            },
-        },
-        // 如果上一步选择vue3-ts
+        ...vueOptions,
         {
             type: 'list',
-            name: 'uiComponet',
-            message: '是否需要UI组件库',
-            choices: ['不需要', 'element-plus', 'ant-design-vue', 'vant'],
-            default: '不需要',
-            when(answers) {
-                return answers.templateName === 'vue3-ts';
-            },
+            name: 'autoInstall',
+            message: '是否需要自动安装包，（默认使用pnpm）',
+            default: 'pnpm',
+            choices: ['不需要', 'pnpm', 'npm', 'yarn'],
         },
     ]);
     return {

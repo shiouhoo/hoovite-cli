@@ -38,6 +38,7 @@ export const vueAction = (options: UserOptions, pkg:Record<string, any>, cliPath
         // 改写 main.ts
         mainFile = mainFile.replace("createApp(App).mount('#app');", "import 'virtual:uno.css';\r\n\r\ncreateApp(App).mount('#app');");
     }
+    // ui组件库
     if(options.uiComponet === 'element-plus') {
         importConfig += "import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';";
         autoImporResolvers += 'ElementPlusResolver()';
@@ -63,6 +64,34 @@ export const vueAction = (options: UserOptions, pkg:Record<string, any>, cliPath
     viteConfig = viteConfig.replace('componentsResolvers', componentsResolvers);
     viteConfig = viteConfig.replace('autoImporResolvers', autoImporResolvers);
     viteConfig = viteConfig.replace('autoImportList', JSON.stringify(autoImportList).replaceAll('"', '\''));
+
+    // vue-router
+    if(options.vueRouter) {
+        pkg.dependencies['vue-router'] = '^4.2.5';
+        // 改写 main.ts
+        mainFile = mainFile.replace("import App from './App.vue';", "import router from './router';\r\nimport App from './App.vue';");
+        mainFile = mainFile.replace('createApp(App)', 'createApp(App).use(router)');
+        copy(path.join(cliPath, 'src/template/router'), path.join(projectPath, 'src/router'));
+    }
+
+    // pinia
+    if(options.pinia) {
+        pkg.dependencies['pinia'] = '^2.1.7';
+        // 改写 main.ts
+        mainFile = mainFile.replace("import App from './App.vue';", "import { createPinia } from 'pinia';\r\nimport App from './App.vue';");
+        mainFile = mainFile.replace('[pinia]', 'const pinia = createPinia();\r\n');
+        mainFile = mainFile.replace('createApp(App)', 'createApp(App).use(pinia)');
+        copy(path.join(cliPath, 'src/template/store'), path.join(projectPath, 'src/store'));
+    }else{
+        mainFile = mainFile.replace('[pinia]', '');
+    }
+
+    // axios
+    if(options.axios) {
+        pkg.dependencies['axios'] = '^1.6.0';
+        copy(path.join(cliPath, 'src/template/request.ts'), path.join(projectPath, 'src/utils/request.ts'));
+        copy(path.join(cliPath, 'src/template/api'), path.join(projectPath, 'src/api'));
+    }
 
     return { viteConfig, mainFile };
 };
