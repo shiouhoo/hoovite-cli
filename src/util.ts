@@ -16,6 +16,10 @@ export function copy(src: string, dest: string) {
             copy(srcFile, destFile);
         }
     } else {
+        // 目录不存在创建
+        if(fs.existsSync(path.dirname(dest)) === false) {
+            fs.mkdirSync(path.dirname(dest), { recursive: true });
+        }
         fs.copyFileSync(src, dest);
     }
 }

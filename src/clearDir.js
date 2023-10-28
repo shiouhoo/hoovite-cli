@@ -16,6 +16,9 @@ function deleteFolderRecursive(folderPath) {
         fs.rmdirSync(folderPath);
     }
 }
-
-deleteFolderRecursive(workerData);
-parentPort.postMessage({ status: 'Done' });
+try{
+    deleteFolderRecursive(workerData);
+    parentPort.postMessage({ status: 'Done' });
+}catch(e) {
+    parentPort.postMessage({ status: 'error', error: e });
+}
