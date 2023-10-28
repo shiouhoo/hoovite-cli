@@ -8,6 +8,7 @@ import { copy } from '@/util.js';
 import { UserOptions } from '@/types';
 import { gitAction } from '@/action/gitAction.js';
 import { vueAction } from '@/action/vueAction.js';
+import { installAction } from '@/action/installAction.js';
 
 const init = async () => {
     try{
@@ -22,11 +23,17 @@ const init = async () => {
         // 清空原有文件夹
         if (overwrite) {
             clearLoading.start();
-            await new Promise((resolve) => {
+            await new Promise((resolve, reject) => {
                 const worker = new Worker(path.join(cliPath, 'src/clearDir.js'), { workerData: projectName });
-                worker.on('message', resolve);
+                worker.on('message', (msg) => {
+                    clearLoading.succeed();
+                    if(msg.error) {
+                        reject(msg.error);
+                        return;
+                    }
+                    resolve(msg);
+                });
             });
-            clearLoading.succeed();
         }
         // 复制模版
         spinner.start();
@@ -49,9 +56,12 @@ const init = async () => {
 
         fs.writeFileSync(path.join(projectPath, 'package.json'), JSON.stringify(pkg, null, 2) + '\n');
 
-        // 初始化 git
-        gitAction(projectPath);
         spinner.succeed();
+        // 初始化 git
+        await gitAction(projectPath);
+
+        // 安装包
+        await installAction(projectPath, option.autoInstall);
 
         // 写入 vite.config.ts
         fs.writeFileSync(path.join(projectPath, 'vite.config.ts'), viteConfig);
@@ -60,12 +70,16 @@ const init = async () => {
         // eslint-disable-next-line no-console
         console.log('下载成功');
     }catch (e) {
+        spinner.fail();
         if (e.message === 'Operation cancelled') {
+            return;
+        }else if(e.message.includes('EBUSY')) {
+            // eslint-disable-next-line no-console
+            console.log('操作无法完成，因为其中的文件夹或文件已在另一程序中打开请关闭该文件夹或文件，然后重试。');
             return;
         }
         // eslint-disable-next-line no-console
         console.log(e);
-        spinner.fail();
     }
 };
 
