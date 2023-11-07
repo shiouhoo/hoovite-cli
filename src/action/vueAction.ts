@@ -5,8 +5,6 @@ import path from 'path';
 
 let importConfig = `
 import { defineConfig } from 'vite';
-import AutoImport from 'unplugin-auto-import/vite';
-import Components from 'unplugin-vue-components/vite';
 `;
 /**
  *
@@ -22,6 +20,7 @@ export const vueAction = (options: UserOptions, pkg:Record<string, any>, cliPath
 
     // 自动导入
     pkg.devDependencies['unplugin-auto-import'] = '^0.16.6';
+    pkg.devDependencies['unplugin-vue-components'] = '^0.25.2';
 
     const autoImportList = ['vue'];
     let autoImporResolvers = '';
@@ -45,7 +44,6 @@ export const vueAction = (options: UserOptions, pkg:Record<string, any>, cliPath
         componentsResolvers += 'ElementPlusResolver()';
         // 修改 package.json
         pkg.dependencies['element-plus'] = '^2.4.1';
-        pkg.devDependencies['unplugin-vue-components'] = '^0.25.2';
         // 修改 vite.config.ts
         viteConfig = viteConfig.replace("import { defineConfig } from 'vite';", importConfig);
 
@@ -54,7 +52,6 @@ export const vueAction = (options: UserOptions, pkg:Record<string, any>, cliPath
         componentsResolvers += '\r\n                AntDesignVueResolver({\r\n                    importStyle: false\r\n                }),\r\n            ';
         // 修改 package.json
         pkg.dependencies['ant-design-vue'] = '^4.0.6';
-        pkg.devDependencies['unplugin-vue-components'] = '^0.25.2';
         // 修改 vite.config.ts
         viteConfig = viteConfig.replace("import { defineConfig } from 'vite';", importConfig);
         // 改写 main.ts
