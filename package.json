@@ -1,6 +1,6 @@
 {
   "name": "create-hoo-vite",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "基于vite的项目模板",
   "main": "index.js",
   "scripts": {

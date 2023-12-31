@@ -2,6 +2,7 @@
 import { UserOptions } from '../types';
 import { copy } from '@/util';
 import path from 'path';
+import pkgConfig from '../../pkg.config';
 
 let importConfig = `
 import { defineConfig } from 'vite';
@@ -19,8 +20,8 @@ export const vueAction = (options: UserOptions, pkg:Record<string, any>, cliPath
     if(options.templateName !== 'vue3-ts') return { viteConfig, mainFile };
 
     // 自动导入
-    pkg.devDependencies['unplugin-auto-import'] = '^0.16.6';
-    pkg.devDependencies['unplugin-vue-components'] = '^0.25.2';
+    pkg.devDependencies['unplugin-auto-import'] = pkgConfig['unplugin-auto-import'];
+    pkg.devDependencies['unplugin-vue-components'] = pkgConfig['unplugin-vue-components'];
 
     const autoImportList = ['vue'];
     let autoImporResolvers = '';
@@ -28,7 +29,7 @@ export const vueAction = (options: UserOptions, pkg:Record<string, any>, cliPath
 
     if(options.unocss) {
         // 修改 package.json
-        pkg.devDependencies['unocss'] = '^0.56.5';
+        pkg.devDependencies['unocss'] = pkgConfig['unocss'];
         // 修改 vite.config.ts
         viteConfig = viteConfig.replace("import { defineConfig } from 'vite';", "import { defineConfig } from 'vite';\r\nimport UnoCSS from 'unocss/vite';");
         viteConfig = viteConfig.replace('vue(),', 'vue(),\r\n        UnoCSS(),');
@@ -43,7 +44,7 @@ export const vueAction = (options: UserOptions, pkg:Record<string, any>, cliPath
         autoImporResolvers += 'ElementPlusResolver()';
         componentsResolvers += 'ElementPlusResolver()';
         // 修改 package.json
-        pkg.dependencies['element-plus'] = '^2.4.1';
+        pkg.dependencies['element-plus'] = pkgConfig['element-plus'];
         // 修改 vite.config.ts
         viteConfig = viteConfig.replace("import { defineConfig } from 'vite';", importConfig);
 
@@ -51,7 +52,7 @@ export const vueAction = (options: UserOptions, pkg:Record<string, any>, cliPath
         importConfig += "import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';";
         componentsResolvers += '\r\n                AntDesignVueResolver({\r\n                    importStyle: false\r\n                }),\r\n            ';
         // 修改 package.json
-        pkg.dependencies['ant-design-vue'] = '^4.0.6';
+        pkg.dependencies['ant-design-vue'] = pkgConfig['ant-design-vue'];
         // 修改 vite.config.ts
         viteConfig = viteConfig.replace("import { defineConfig } from 'vite';", importConfig);
         // 改写 main.ts
@@ -64,7 +65,7 @@ export const vueAction = (options: UserOptions, pkg:Record<string, any>, cliPath
 
     // vue-router
     if(options.vueRouter) {
-        pkg.dependencies['vue-router'] = '^4.2.5';
+        pkg.dependencies['vue-router'] = pkgConfig['vue-router'];
         // 改写 main.ts
         mainFile = mainFile.replace("import App from './App.vue';", "import router from './router';\r\nimport App from './App.vue';");
         mainFile = mainFile.replace('createApp(App)', 'createApp(App).use(router)');
@@ -73,7 +74,7 @@ export const vueAction = (options: UserOptions, pkg:Record<string, any>, cliPath
 
     // pinia
     if(options.pinia) {
-        pkg.dependencies['pinia'] = '^2.1.7';
+        pkg.dependencies['pinia'] = pkgConfig['pinia'];
         // 改写 main.ts
         mainFile = mainFile.replace("import App from './App.vue';", "import { createPinia } from 'pinia';\r\nimport App from './App.vue';");
         mainFile = mainFile.replace('[pinia]', 'const pinia = createPinia();\r\n');
@@ -85,7 +86,7 @@ export const vueAction = (options: UserOptions, pkg:Record<string, any>, cliPath
 
     // axios
     if(options.axios) {
-        pkg.dependencies['axios'] = '^1.6.0';
+        pkg.dependencies['axios'] = pkgConfig['axios'];
         copy(path.join(cliPath, 'src/template/request.ts'), path.join(projectPath, 'src/utils/request.ts'));
         copy(path.join(cliPath, 'src/template/api'), path.join(projectPath, 'src/api'));
     }
