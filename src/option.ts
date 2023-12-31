@@ -9,14 +9,14 @@ function isValidPackageName(projectName) {
     );
 }
 
-const vueOptions = [
+const otherOptions = [
     {
         type: 'confirm',
         name: 'unocss',
         message: '你是否需要unocss？',
         default: true,
         when(answers) {
-            return answers.templateName === 'vue3-ts';
+            return ['vue3-ts', 'electron-vue'].includes(answers.templateName);
         },
     },
     {
@@ -26,7 +26,7 @@ const vueOptions = [
         choices: ['不需要', 'element-plus', 'ant-design-vue'],
         default: '不需要',
         when(answers) {
-            return answers.templateName === 'vue3-ts';
+            return ['vue3-ts', 'electron-vue'].includes(answers.templateName);
         },
     },
     {
@@ -35,7 +35,7 @@ const vueOptions = [
         message: '你是否需要vue-router？',
         default: true,
         when(answers) {
-            return answers.templateName === 'vue3-ts';
+            return ['vue3-ts', 'electron-vue'].includes(answers.templateName);
         },
     },
     {
@@ -44,7 +44,7 @@ const vueOptions = [
         message: '你是否需要pinia？',
         default: true,
         when(answers) {
-            return answers.templateName === 'vue3-ts';
+            return ['vue3-ts', 'electron-vue'].includes(answers.templateName);
         },
     },
     {
@@ -53,7 +53,7 @@ const vueOptions = [
         message: '你是否需要axios？',
         default: true,
         when(answers) {
-            return answers.templateName === 'vue3-ts';
+            return ['vue3-ts', 'electron-vue'].includes(answers.templateName);
         },
     },
 ];
@@ -101,9 +101,10 @@ export const userOptions = async (): Promise<UserOptions> => {
             default: 'vue3-ts',
             choices: [
                 { name: 'vue3-ts', value: 'vue3-ts' },
+                { name: 'electron-vue', value: 'electron-vue' },
             ],
         },
-        ...vueOptions,
+        ...otherOptions,
         {
             type: 'list',
             name: 'autoInstall',

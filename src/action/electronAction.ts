@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { UserOptions } from '../types';
 import pkgConfig from '../../pkg.config';
-import { unocssAction, elementPlusAction, antdvAction, vueRouterAction, piniaAction, axiosAction } from './pkgAction';
+import { unocssElectronAction, elementPlusAction, antdvAction, vueRouterAction, piniaAction, axiosAction } from './pkgAction';
 
 const importConfig = `
-import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
 `;
 /**
  *
@@ -15,8 +15,8 @@ import { defineConfig } from 'vite';
  * @param viteConfig vite.config.ts
  * @returns vite.config.ts修改后内容
  */
-export const vueAction = (options: UserOptions, pkg:Record<string, any>, cliPath:string, projectPath: string, viteConfig: string, mainFile: string): Record<string, string> => {
-    if(options.templateName !== 'vue3-ts') return { viteConfig, mainFile };
+export const electronAction = (options: UserOptions, pkg:Record<string, any>, cliPath:string, projectPath: string, viteConfig: string, mainFile: string): Record<string, string> => {
+    if(options.templateName !== 'electron-vue') return { viteConfig, mainFile };
 
     // 自动导入
     pkg.devDependencies['unplugin-auto-import'] = pkgConfig['unplugin-auto-import'];
@@ -27,12 +27,11 @@ export const vueAction = (options: UserOptions, pkg:Record<string, any>, cliPath
     let componentsResolvers = '';
 
     if(options.unocss) {
-        ({ viteConfig, mainFile } = unocssAction(pkg, cliPath, projectPath, viteConfig, mainFile, importConfig));
+        ({ viteConfig, mainFile } = unocssElectronAction(pkg, cliPath, projectPath, viteConfig, mainFile, importConfig));
     }
     // ui组件库
     if(options.uiComponet === 'element-plus') {
         ({ viteConfig, autoImporResolvers, componentsResolvers } = elementPlusAction(pkg, viteConfig, autoImporResolvers, componentsResolvers, importConfig));
-
     }else if (options.uiComponet === 'ant-design-vue') {
         ({ viteConfig, autoImporResolvers, componentsResolvers } = antdvAction(pkg, viteConfig, mainFile, autoImporResolvers, componentsResolvers, importConfig));
     }

@@ -1,14 +1,14 @@
 import { userOptions } from '@/option';
-import { spinner, clearLoading } from './src/spinner.js';
+import { spinner, clearLoading } from './src/spinner';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { Worker } from 'worker_threads';
-import { copy } from '@/util.js';
+import { copy, getMainFileUrl, getViteConfigFileUrl } from '@/util';
 import { UserOptions } from '@/types';
-import { gitAction } from '@/action/gitAction.js';
-import { vueAction } from '@/action/vueAction.js';
-import { installAction } from '@/action/installAction.js';
+import { gitAction } from '@/action/gitAction';
+import { initProject } from '@/action';
+import { installAction } from '@/action/installAction';
 
 const init = async () => {
     try{
@@ -41,9 +41,9 @@ const init = async () => {
         copy(templateDir, projectPath);
 
         /** vite.config.ts文件内容 */
-        let viteConfig = fs.readFileSync(path.join(projectPath, 'vite.config.ts'), 'utf-8');
+        let viteConfig = fs.readFileSync(getViteConfigFileUrl(templateName, projectPath), 'utf-8');
         /** main.ts文件内容 */
-        let mainFile = fs.readFileSync(path.join(projectPath, 'src/main.ts'), 'utf-8');
+        let mainFile = fs.readFileSync(getMainFileUrl(templateName, projectPath), 'utf-8');
 
         // 修改 package.json
         const pkg = JSON.parse(
@@ -52,9 +52,12 @@ const init = async () => {
         pkg.name = projectName;
 
         // 初始化vue项目
-        ({ viteConfig, mainFile } = vueAction(option, pkg, cliPath, projectPath, viteConfig, mainFile));
+        ({ viteConfig, mainFile } = initProject(option, pkg, cliPath, projectPath, viteConfig, mainFile));
 
         fs.writeFileSync(path.join(projectPath, 'package.json'), JSON.stringify(pkg, null, 2) + '\n');
+        // 写入 vite.config.ts
+        fs.writeFileSync(getViteConfigFileUrl(templateName, projectPath), viteConfig);
+        fs.writeFileSync(getMainFileUrl(templateName, projectPath), mainFile);
 
         spinner.succeed();
         // 初始化 git
@@ -62,10 +65,6 @@ const init = async () => {
 
         // 安装包
         await installAction(projectPath, option.autoInstall);
-
-        // 写入 vite.config.ts
-        fs.writeFileSync(path.join(projectPath, 'vite.config.ts'), viteConfig);
-        fs.writeFileSync(path.join(projectPath, 'src/main.ts'), mainFile);
 
         // eslint-disable-next-line no-console
         console.log('下载成功');

@@ -23,3 +23,20 @@ export function copy(src: string, dest: string) {
         fs.copyFileSync(src, dest);
     }
 }
+
+export function getMainFileUrl(templateName: string, projectPath: string) {
+    switch (templateName) {
+    case 'electron-vue':
+        return path.join(projectPath, 'src/renderer/src/main.ts');
+    default:
+        return path.join(projectPath, 'src/main.ts');
+    }
+}
+export function getViteConfigFileUrl(templateName: string, projectPath: string) {
+    switch (templateName) {
+    case 'electron-vue':
+        return path.join(projectPath, 'electron.vite.config.ts');
+    default:
+        return path.join(projectPath, 'vite.config.ts');
+    }
+}
