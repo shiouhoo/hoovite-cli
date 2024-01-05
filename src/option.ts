@@ -102,6 +102,7 @@ export const userOptions = async (): Promise<UserOptions> => {
             choices: [
                 { name: 'vue3-ts', value: 'vue3-ts' },
                 { name: 'electron-vue', value: 'electron-vue' },
+                { name: 'node-ts', value: 'node-ts' },
             ],
         },
         ...otherOptions,

@@ -1,0 +1,40 @@
+{
+    "name": "",
+    "version": "1.0.0",
+    "description": "",
+    "type": "module",
+    "main": "index.js",
+    "scripts": {
+        "lint": "eslint . --fix",
+        "prepare": "husky install"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^17.6.7",
+        "@commitlint/config-conventional": "^17.6.7",
+        "@rollup/plugin-commonjs": "^25.0.7",
+        "@rollup/plugin-terser": "^0.4.4",
+        "@shiouhoo/eslint-config": "^1.0.10",
+        "@types/node": "^20.8.7",
+        "@typescript-eslint/eslint-plugin": "^6.8.0",
+        "@typescript-eslint/parser": "^6.8.0",
+        "commitizen": "^4.3.0",
+        "cz-git": "^1.7.0",
+        "lint-staged": "^13.2.3",
+        "husky": "^8.0.3",
+        "rollup": "^4.1.4",
+        "rollup-plugin-typescript2": "^0.36.0",
+        "eslint": "^8.52.0",
+        "typescript": "^5.2.2"
+    },
+    "keywords": [],
+    "author": "shiouhoo",
+    "license": "MIT",
+    "config": {
+        "commitizen": {
+            "path": "node_modules/cz-git"
+        }
+    },
+    "lint-staged": {
+        "*.{js,ts,vue}": "eslint --fix"
+    }
+}
