@@ -12,6 +12,7 @@ import { installAction } from '@/action/installAction';
 
 const init = async () => {
     try{
+
         /** 脚手架位置 */
         const cliPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '../');
         /** 命令运行位置 */
