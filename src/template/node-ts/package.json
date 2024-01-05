@@ -6,6 +6,7 @@
     "main": "index.js",
     "scripts": {
         "lint": "eslint . --fix",
+        "type-check": "tsc --noEmit --project tsconfig.json",
         "prepare": "husky install"
     },
     "devDependencies": {
@@ -35,6 +36,9 @@
         }
     },
     "lint-staged": {
-        "*.{js,ts,vue}": "eslint --fix"
+        "*.{js,ts,vue}": [
+            "npm run type-check",
+            "eslint --fix"
+        ]
     }
 }

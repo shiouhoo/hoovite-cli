@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+        "type-check": "tsc --noEmit --project tsconfig.json",
         "build": "rollup -c",
         "r": "node ./lib/index",
         "dev": "rollup -c && node ./lib/index",
@@ -58,6 +59,9 @@
         }
     },
     "lint-staged": {
-        "*.{js,ts,vue}": "eslint --fix"
+        "*.{js,ts,vue}": [
+            "npm run type-check",
+            "eslint --fix"
+        ]
     }
 }
