@@ -41,24 +41,28 @@ const init = async () => {
         const templateDir = path.join(cliPath, `src/template/${templateName}`);
         copy(templateDir, projectPath);
 
-        /** vite.config.ts文件内容 */
-        let viteConfig = fs.readFileSync(getViteConfigFileUrl(templateName, projectPath), 'utf-8');
-        /** main.ts文件内容 */
-        let mainFile = fs.readFileSync(getMainFileUrl(templateName, projectPath), 'utf-8');
-
         // 修改 package.json
         const pkg = JSON.parse(
             fs.readFileSync(path.join(templateDir, `package.json`), 'utf-8'),
         );
         pkg.name = projectName;
 
-        // 初始化vue项目
-        ({ viteConfig, mainFile } = initProject(option, pkg, cliPath, projectPath, viteConfig, mainFile));
-
         fs.writeFileSync(path.join(projectPath, 'package.json'), JSON.stringify(pkg, null, 2) + '\n');
-        // 写入 vite.config.ts
-        fs.writeFileSync(getViteConfigFileUrl(templateName, projectPath), viteConfig);
-        fs.writeFileSync(getMainFileUrl(templateName, projectPath), mainFile);
+
+        if(['electron-vue', 'vue3-ts'].includes(templateName)) {
+
+            /** vite.config.ts文件内容 */
+            let viteConfig = fs.readFileSync(getViteConfigFileUrl(templateName, projectPath), 'utf-8');
+            /** main.ts文件内容 */
+            let mainFile = fs.readFileSync(getMainFileUrl(templateName, projectPath), 'utf-8');
+
+            // 初始化vue项目
+            ({ viteConfig, mainFile } = initProject(option, pkg, cliPath, projectPath, viteConfig, mainFile));
+
+            // 写入 vite.config.ts
+            fs.writeFileSync(getViteConfigFileUrl(templateName, projectPath), viteConfig);
+            fs.writeFileSync(getMainFileUrl(templateName, projectPath), mainFile);
+        }
 
         spinner.succeed();
         // 初始化 git

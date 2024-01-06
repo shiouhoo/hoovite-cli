@@ -33,7 +33,7 @@ export function elementPlusAction(pkg:Record<string, any>, viteConfig: string, a
     autoImporResolvers += 'ElementPlusResolver()';
     componentsResolvers += 'ElementPlusResolver()';
     // 修改 package.json
-    pkg.dependencies['element-plus'] = pkgConfig['element-plus'];
+    pkg.devDependencies['element-plus'] = pkgConfig['element-plus'];
     // 修改 vite.config.ts
     viteConfig = viteConfig.replace(importReplace, importConfig);
     return {
@@ -46,7 +46,7 @@ export function antdvAction(pkg:Record<string, any>, viteConfig: string, mainFil
     const importConfig = importReplace + "import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';\r\n";
     componentsResolvers += '\r\n                AntDesignVueResolver({\r\n                    importStyle: false\r\n                }),\r\n            ';
     // 修改 package.json
-    pkg.dependencies['ant-design-vue'] = pkgConfig['ant-design-vue'];
+    pkg.devDependencies['ant-design-vue'] = pkgConfig['ant-design-vue'];
     // 修改 vite.config.ts
     viteConfig = viteConfig.replace(importReplace, importConfig);
     // 改写 main.ts
