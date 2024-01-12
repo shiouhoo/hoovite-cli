@@ -7,13 +7,31 @@
 ```js
 // npm
 npm create hoo-vite
+// pnpm
+pnpm create hoo-vite
 ```
 
 ## 模板列表
 
 #### vue3-ts
+
+vue3项目
+
 - 必选：eslint，sass，commitlint，husky，lint-staged,自动导入
 - 可选: unocss, element-plus, antdV, pinia, vue-router, axios
+
+#### electron-vue
+
+vue3+electron项目
+
+- 必选：eslint，sass，commitlint，husky，lint-staged,自动导入
+- 可选: unocss, element-plus, antdV, pinia, vue-router, axios
+
+#### node-ts
+
+node项目
+
+- 必选：eslint，sass，commitlint，husky，lint-staged
 
 ## 反馈
 

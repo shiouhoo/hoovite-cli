@@ -14,7 +14,7 @@ const override = { compilerOptions: { module: 'esnext' } };
 export default {
     input: 'index.ts',
     output: {
-        file: path.resolve(__dirnameNew, 'lib/index.js'),
+        file: path.resolve(__dirnameNew, 'dist/index.js'),
         sourcemap: false,
         banner: '#!/usr/bin/env node\n',
     },

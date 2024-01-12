@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "",
     "type": "module",
-    "main": "index.js",
+    "main": "./lib/index.js",
     "scripts": {
         "lint": "eslint . --fix",
         "build": "rollup -c",
@@ -29,6 +29,9 @@
         "typescript": "^5.2.2"
     },
     "keywords": [],
+    "files": [
+        "lib"
+    ],
     "author": "shiouhoo",
     "license": "MIT",
     "config": {

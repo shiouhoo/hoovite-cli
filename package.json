@@ -1,8 +1,7 @@
 {
     "name": "create-hoo-vite",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "基于vite的项目模板",
-    "main": "index.js",
     "scripts": {
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
         "build": "rollup -c",
@@ -18,11 +17,14 @@
     "author": "shiouhoo",
     "license": "MIT",
     "bin": {
-        "create-hoo-vite": "./lib/index.js"
+        "create-hoo-vite": "./dist/index.js"
+    },
+    "engines": {
+        "node": ">=16"
     },
     "files": [
         "src/template/*",
-        "lib"
+        "dist"
     ],
     "repository": {
         "type": "git",
@@ -42,14 +44,12 @@
         "@typescript-eslint/parser": "^6.8.0",
         "commitizen": "^4.3.0",
         "cz-git": "^1.7.0",
-        "lint-staged": "^13.2.3",
-        "husky": "^8.0.3",
         "eslint": "^8.52.0",
-        "inquirer": "^9.2.8",
+        "husky": "^8.0.3",
+        "lint-staged": "^13.2.3",
         "minimist": "^1.2.8",
         "rollup": "^4.1.4",
         "rollup-plugin-typescript2": "^0.36.0",
-        "spinner": "^0.3.4",
         "typescript": "^5.2.2"
     },
     "config": {
@@ -61,5 +61,9 @@
         "*.{js,ts,vue}": [
             "eslint --fix"
         ]
+    },
+    "dependencies": {
+        "inquirer": "^9.2.8",
+        "ora": "^6.3.1"
     }
 }
