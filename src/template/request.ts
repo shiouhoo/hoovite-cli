@@ -1,4 +1,4 @@
-import axios, { type InternalAxiosRequestConfig } from 'axios';
+import axios, { type AxiosRequestConfig } from 'axios';
 
 // 创建axios实例
 const service = axios.create({
@@ -11,7 +11,7 @@ const service = axios.create({
 });
 
 // 请求拦截器
-service.interceptors.request.use((config: InternalAxiosRequestConfig<any>) => {
+service.interceptors.request.use((config: AxiosRequestConfig<any>) => {
     // 这里可以进行请求加密等操作。如添加token,cookie，修改数据传输格式等。
     if (!config || !config.headers) {
         return config;
@@ -37,34 +37,4 @@ service.interceptors.response.use(
     }
 );
 
-const http = {
-    get(url: string, params?: any, headers?: any) {
-        const config: AxiosRequestConfig = {
-            method: 'GET',
-            url: url,
-            params: params,
-            headers: headers,
-        };
-        return service(config);
-    },
-    post(url: string, data?: any, params?: any, headers?: any) {
-        const config: AxiosRequestConfig = {
-            method: 'POST',
-            url: url,
-            data: data,
-            params: params,
-            headers: headers,
-        };
-        return service(config);
-    },
-    delete(url: string, data?: any, headers?: any) {
-        const config: AxiosRequestConfig = {
-            method: 'delete',
-            url: url,
-            data: data,
-            headers: headers,
-        };
-        return service(config);
-    },
-};
-export default http;
+export default service;

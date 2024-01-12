@@ -9,10 +9,11 @@ import { UserOptions } from '@/types';
 import { gitAction } from '@/action/gitAction';
 import { initProject } from '@/action';
 import { installAction } from '@/action/installAction';
+import packageFile from './package.json';
 
 const init = async () => {
     try{
-
+        console.log('hoo-vite,当前版本：', packageFile.version);
         /** 脚手架位置 */
         const cliPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '../');
         /** 命令运行位置 */
@@ -38,16 +39,20 @@ const init = async () => {
         }
         // 复制模版
         spinner.start();
+        // 如果存在，复制 .gitignore 文件
         const templateDir = path.join(cliPath, `src/template/${templateName}`);
         copy(templateDir, projectPath);
+        // 复制 .gitignore 文件
+        fs.copyFileSync(path.join(projectPath, '.npmignore'), path.join(projectPath, '.gitignore'));
+        fs.unlinkSync(path.join(projectPath, '.npmignore'));
+        fs.copyFileSync(path.join(templateDir, '.husky/_/.npmignore'), path.join(projectPath, '.husky/_/.gitignore'));
+        fs.unlinkSync(path.join(projectPath, '.husky/_/.npmignore'));
 
         // 修改 package.json
         const pkg = JSON.parse(
             fs.readFileSync(path.join(templateDir, `package.json`), 'utf-8'),
         );
         pkg.name = projectName;
-
-        fs.writeFileSync(path.join(projectPath, 'package.json'), JSON.stringify(pkg, null, 2) + '\n');
 
         if(['electron-vue', 'vue3-ts'].includes(templateName)) {
 
@@ -64,6 +69,8 @@ const init = async () => {
             fs.writeFileSync(getMainFileUrl(templateName, projectPath), mainFile);
         }
 
+        fs.writeFileSync(path.join(projectPath, 'package.json'), JSON.stringify(pkg, null, 2) + '\n');
+
         spinner.succeed();
         // 初始化 git
         await gitAction(projectPath);
@@ -74,7 +81,6 @@ const init = async () => {
         // eslint-disable-next-line no-console
         console.log('下载成功');
     }catch (e) {
-        spinner.fail();
         if (e.message === 'Operation cancelled') {
             return;
         }else if(e.message.includes('EBUSY')) {
@@ -82,6 +88,7 @@ const init = async () => {
             console.log('操作无法完成，因为其中的文件夹或文件已在另一程序中打开请关闭该文件夹或文件，然后重试。');
             return;
         }
+        spinner.fail();
         // eslint-disable-next-line no-console
         console.log(e);
     }
