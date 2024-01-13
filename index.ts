@@ -10,9 +10,11 @@ import { gitAction } from '@/action/gitAction';
 import { initProject } from '@/action';
 import { installAction } from '@/action/installAction';
 import packageFile from './package.json';
+import pkgConfig from './pkg.config';
 
 const init = async () => {
     try{
+        // eslint-disable-next-line no-console
         console.log('hoo-vite,当前版本：', packageFile.version);
         /** 脚手架位置 */
         const cliPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '../');
@@ -42,17 +44,21 @@ const init = async () => {
         // 如果存在，复制 .gitignore 文件
         const templateDir = path.join(cliPath, `src/template/${templateName}`);
         copy(templateDir, projectPath);
-        // 复制 .gitignore 文件
-        fs.copyFileSync(path.join(projectPath, '.npmignore'), path.join(projectPath, '.gitignore'));
-        fs.unlinkSync(path.join(projectPath, '.npmignore'));
-        fs.copyFileSync(path.join(templateDir, '.husky/_/.npmignore'), path.join(projectPath, '.husky/_/.gitignore'));
-        fs.unlinkSync(path.join(projectPath, '.husky/_/.npmignore'));
+        try{
+            // pnpm 不需要此操作
+            // 复制 .gitignore 文件
+            fs.copyFileSync(path.join(projectPath, '.npmignore'), path.join(projectPath, '.gitignore'));
+            fs.unlinkSync(path.join(projectPath, '.npmignore'));
+            fs.copyFileSync(path.join(templateDir, '.husky/_/.npmignore'), path.join(projectPath, '.husky/_/.gitignore'));
+            fs.unlinkSync(path.join(projectPath, '.husky/_/.npmignore'));
+        }catch{ /* empty */ }
 
         // 修改 package.json
         const pkg = JSON.parse(
             fs.readFileSync(path.join(templateDir, `package.json`), 'utf-8'),
         );
         pkg.name = projectName;
+        pkg.devDependencies['@shiouhoo/eslint-config'] = pkgConfig['@shiouhoo/eslint-config'];
 
         if(['electron-vue', 'vue3-ts'].includes(templateName)) {
 
