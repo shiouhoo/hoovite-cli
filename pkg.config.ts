@@ -6,5 +6,7 @@ export default {
     'ant-design-vue': '^4.0.6',
     'vue-router': '^4.2.5',
     'pinia': '^2.1.7',
-    'axios': '^0.21.1',
+    'axios': '^1.6.5',
+    '@shiouhoo/eslint-config': '^1.0.10',
+    'less': '^4.2.0',
 };

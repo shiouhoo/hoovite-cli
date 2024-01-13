@@ -17,21 +17,21 @@ pnpm create hoo-vite
 
 vue3项目
 
-- 必选：eslint，sass，commitlint，husky，lint-staged,自动导入
+- 必选：eslint，less，commitlint，husky，lint-staged,自动导入
 - 可选: unocss, element-plus, antdV, pinia, vue-router, axios
 
 #### electron-vue
 
 vue3+electron项目
 
-- 必选：eslint，sass，commitlint，husky，lint-staged,自动导入
+- 必选：eslint，less，commitlint，husky，lint-staged,自动导入
 - 可选: unocss, element-plus, antdV, pinia, vue-router, axios
 
 #### node-ts
 
 node项目
 
-- 必选：eslint，sass，commitlint，husky，lint-staged
+- 必选：eslint，commitlint，husky，lint-staged
 
 ## 反馈
 

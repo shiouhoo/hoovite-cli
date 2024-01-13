@@ -22,12 +22,12 @@ export default defineConfig({
             AutoImport({
                 imports: autoImportList,
                 resolvers: [autoImporResolvers],
-                dts: 'src/renderer/src/auto-import.d.ts',
+                dts: 'src/auto-import.d.ts',
             }),
             Components({
                 dirs: ['src/components'],
                 resolvers: [componentsResolvers],
-                dts: 'src/renderer/src/components.d.ts',
+                dts: 'src/components.d.ts',
             })
         ]
     }

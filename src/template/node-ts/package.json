@@ -3,7 +3,9 @@
     "version": "1.0.0",
     "description": "",
     "type": "module",
-    "main": "./lib/index.js",
+    "main": "dist/index.js",
+    "module": "dist/index.mjs",
+    "types": "dist/index.d.ts",
     "scripts": {
         "lint": "eslint . --fix",
         "build": "rollup -c",
@@ -24,13 +26,14 @@
         "lint-staged": "^13.2.3",
         "husky": "^8.0.3",
         "rollup": "^4.1.4",
+        "rollup-plugin-dts": "^6.1.0",
         "rollup-plugin-typescript2": "^0.36.0",
         "eslint": "^8.52.0",
         "typescript": "^5.2.2"
     },
     "keywords": [],
     "files": [
-        "lib"
+        "dist"
     ],
     "author": "shiouhoo",
     "license": "MIT",

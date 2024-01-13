@@ -41,11 +41,11 @@
 </template>
 
 <script lang='ts' setup>
-import icon from '@renderer/assets/icon.png';
-import maxWindowRestoreIcon from '@renderer/assets/max-window-restore.svg';
-import maxWindowIcon from '@renderer/assets/max-window.svg';
-import minWindowIcon from '@renderer/assets/min-window.svg';
-import closeIcon from '@renderer/assets/close.svg';
+import icon from '@renderer/assets/icons/icon.png';
+import maxWindowRestoreIcon from '@renderer/assets/icons/max-window-restore.svg';
+import maxWindowIcon from '@renderer/assets/icons/max-window.svg';
+import minWindowIcon from '@renderer/assets/icons/min-window.svg';
+import closeIcon from '@renderer/assets/icons/close.svg';
 import { WindowType } from '@main/type';
 
 const props = withDefaults(defineProps<{
@@ -85,7 +85,7 @@ const closeWinow = () =>{
     padding-left: 10px;
     width: 100vw;
     height: 30px;
-    background-color: rgb(31,31,31);
+    background-color: rgb(42,42,42);
     -webkit-app-region: drag;
     .icon-name{
         display: flex;

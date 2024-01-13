@@ -1,4 +1,4 @@
-import axios, { type AxiosRequestConfig } from 'axios';
+import axios, { type InternalAxiosRequestConfig } from 'axios';
 
 // 创建axios实例
 const service = axios.create({
@@ -7,11 +7,11 @@ const service = axios.create({
     withCredentials: false, // 跨域请求时是否需要访问凭证
     // 请求头
     headers: {},
-    timeout: 7000, // 请求超时时间
+    timeout: 10000, // 请求超时时间
 });
 
 // 请求拦截器
-service.interceptors.request.use((config: AxiosRequestConfig<any>) => {
+service.interceptors.request.use((config: InternalAxiosRequestConfig<any>) => {
     // 这里可以进行请求加密等操作。如添加token,cookie，修改数据传输格式等。
     if (!config || !config.headers) {
         return config;

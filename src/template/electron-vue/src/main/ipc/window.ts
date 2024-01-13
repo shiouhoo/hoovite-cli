@@ -1,4 +1,4 @@
-import { ipcMain, webContents } from 'electron';
+import { ipcMain } from 'electron';
 import { mainWindow } from '../window';
 import { WindowType } from '../type';
 

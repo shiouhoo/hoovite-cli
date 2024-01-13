@@ -18,7 +18,7 @@ module.exports = {
     plugins: [
         '@typescript-eslint'
     ],
-    ignorePatterns: ['lib', 'template'],
+    ignorePatterns: ['dist', 'template'],
     rules: {
         '@typescript-eslint/no-explicit-any': 'warn',
     }
