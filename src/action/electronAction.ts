@@ -2,6 +2,7 @@
 import { UserOptions } from '../types';
 import pkgConfig from '../../pkg.config';
 import { unocssElectronAction, elementPlusAction, antdvAction, vueRouterAction, piniaAction, axiosAction } from './pkgAction';
+import path from 'path';
 
 const importConfig = `
 import vue from '@vitejs/plugin-vue';
@@ -42,19 +43,19 @@ export const electronAction = (options: UserOptions, pkg:Record<string, any>, cl
 
     // vue-router
     if(options.vueRouter) {
-        ({ mainFile } = vueRouterAction(pkg, mainFile, cliPath, projectPath));
+        ({ mainFile } = vueRouterAction(pkg, mainFile, cliPath, path.join(projectPath, 'src/renderer')));
     }
 
     // pinia
     if(options.pinia) {
-        ({ mainFile } = piniaAction(pkg, mainFile, cliPath, projectPath));
+        ({ mainFile } = piniaAction(pkg, mainFile, cliPath, path.join(projectPath, 'src/renderer')));
     }else{
         mainFile = mainFile.replace('[pinia]', '');
     }
 
     // axios
     if(options.axios) {
-        axiosAction(pkg, cliPath, projectPath);
+        axiosAction(pkg, cliPath, path.join(projectPath, 'src/renderer'));
     }
 
     return { viteConfig, mainFile };

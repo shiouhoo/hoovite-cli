@@ -1,4 +1,4 @@
-import { spawn, ChildProcessWithoutNullStreams } from 'child_process';
+import { execSync } from 'child_process';
 import os from 'os';
 
 /**
@@ -17,28 +17,13 @@ export const installAction = async (__dirPath:string, way:string) => {
         default: resolve(null);return;
         }
 
-        let child: ChildProcessWithoutNullStreams;
-
         if (os.platform() === 'win32') {
-        // Windows
-            child = spawn('cmd.exe', ['/c', `cd /d ${__dirPath} && ${cmd}`]);
+            // Windows
+            execSync(`cd /d ${__dirPath} && ${cmd}`, { stdio: 'inherit' });
         } else {
         // macOS 或 Linux
-            child = spawn('sh', ['-c', `cd "${__dirPath.replaceAll('\\', '/')}" && ${cmd}`]);
+            execSync(`cd "${__dirPath.replaceAll('\\', '/')}" && ${cmd}`, { stdio: 'inherit' });
         }
-        child.stdout.on('data', (data) => {
-            if(`${data}`.includes('Progress: resolved')) {
-                if(!`${data}`.includes('Progress: resolved 1,')) {
-                    process.stdout.clearLine(0); // 清除当前行
-                    process.stdout.cursorTo(0); // 移动光标到行首
-                }
-                process.stdout.write(`${data}`.replace(/\n/g, ''));
-            }else{
-                console.log(`\r\n${data}`);
-            }
-            if(`${data}`.includes('Done')) {
-                resolve('执行成功');
-            }
-        });
+        resolve('执行成功');
     });
 };

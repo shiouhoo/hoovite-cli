@@ -73,7 +73,7 @@ export function piniaAction(pkg:Record<string, any>, mainFile: string, cliPath:s
     pkg.dependencies['pinia'] = pkgConfig['pinia'];
     // 改写 main.ts
     mainFile = mainFile.replace("import App from './App.vue';", "import { createPinia } from 'pinia';\r\nimport App from './App.vue';");
-    mainFile = mainFile.replace('[pinia]', 'const pinia = createPinia();\r\n');
+    mainFile = mainFile.replace('[pinia]', '\r\nconst pinia = createPinia();\r\n');
     mainFile = mainFile.replace('createApp(App)', 'createApp(App).use(pinia)');
     copy(path.join(cliPath, 'src/template/store'), path.join(projectPath, 'src/store'));
     return {
