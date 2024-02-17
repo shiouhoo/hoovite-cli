@@ -3,9 +3,7 @@ import { UserOptions } from '../types';
 import pkgConfig from '../../pkg.config';
 import { unocssAction, elementPlusAction, antdvAction, vueRouterAction, piniaAction, axiosAction } from './pkgAction';
 
-const importConfig = `
-import { defineConfig } from 'vite';
-`;
+const importConfig = "import { defineConfig } from 'vite'";
 /**
  *
  * @param options 用户选项

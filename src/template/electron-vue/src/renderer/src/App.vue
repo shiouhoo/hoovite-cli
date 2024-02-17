@@ -9,7 +9,7 @@
         class="hero-logo"
         viewBox="0 0 900 300"
     >
-        <use xlink:href="./assets/icons.svg#electron" />
+        <use xlink:href="./assets/icons/icons.svg#electron" />
     </svg>
     <h2 class="hero-text">
         You've successfully created an Electron project with Vue and TypeScript
@@ -129,4 +129,77 @@
 
 <style lang="less">
 @import './assets/css/styles.less';
+.hero-logo {
+    margin-top: -0.4rem;
+    transition: all 0.3s;
+}
+.hero-text {
+    font-weight: 400;
+    color: #c2f5ff;
+    text-align: center;
+    margin-top: -0.5rem;
+    margin-bottom: 10px;
+}
+.hero-tagline {
+    text-align: center;
+    margin-bottom: 14px;
+}
+
+.links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    font-size: 18px;
+    font-weight: 500;
+
+    a {
+        font-weight: 500;
+    }
+
+    .link-item {
+        padding: 0 4px;
+    }
+}
+
+.features {
+    display: flex;
+    flex-wrap: wrap;
+
+    .feature-item {
+        width: 33.33%;
+        box-sizing: border-box;
+        padding: 6px;
+    }
+
+    article {
+        background-color: rgba(194, 245, 255, 0.1);
+        border-radius: 8px;
+        box-sizing: border-box;
+        padding: 12px;
+        height: 100%;
+    }
+
+    span {
+        color: #d4e8ef;
+        word-break: break-all;
+    }
+
+    .title {
+        font-size: 17px;
+        font-weight: 500;
+        color: #c2f5ff;
+        line-height: 22px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .detail {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 22px;
+        margin-top: 6px;
+    }
+}
 </style>

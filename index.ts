@@ -11,6 +11,7 @@ import { initProject } from '@/action';
 import { installAction } from '@/action/installAction';
 import packageFile from './package.json';
 import pkgConfig from './pkg.config';
+import { lintAction } from '@/action/lintAction';
 
 const init = async () => {
     try{
@@ -83,6 +84,9 @@ const init = async () => {
 
         // 安装包
         await installAction(projectPath, option.autoInstall);
+
+        // lint
+        lintAction(projectPath);
 
         // eslint-disable-next-line no-console
         console.log('下载成功');

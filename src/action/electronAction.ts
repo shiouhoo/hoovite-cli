@@ -4,9 +4,7 @@ import pkgConfig from '../../pkg.config';
 import { unocssElectronAction, elementPlusAction, antdvAction, vueRouterAction, piniaAction, axiosAction } from './pkgAction';
 import path from 'path';
 
-const importConfig = `
-import vue from '@vitejs/plugin-vue';
-`;
+const importConfig = "import vue from '@vitejs/plugin-vue'";
 /**
  *
  * @param options 用户选项

@@ -1,6 +1,6 @@
 {
     "name": "create-hoo-vite",
-    "version": "1.2.6",
+    "version": "1.2.7",
     "description": "基于vite + ts的项目模板",
     "scripts": {
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
