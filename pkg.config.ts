@@ -7,6 +7,6 @@ export default {
     'vue-router': '^4.2.5',
     'pinia': '^2.1.7',
     'axios': '^1.6.5',
-    '@shiouhoo/eslint-config': '^1.0.10',
+    '@shiouhoo/eslint-config': '^1.0.11',
     'less': '^4.2.0',
 };

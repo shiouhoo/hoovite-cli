@@ -1,12 +1,12 @@
 {
     "name": "create-hoo-vite",
-    "version": "1.2.7",
+    "version": "1.2.8",
     "description": "基于vite + ts的项目模板",
     "scripts": {
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
         "build": "rollup -c",
-        "r": "node ./lib/index",
-        "dev": "rollup -c && node ./lib/index",
+        "r": "node ./dist/index",
+        "dev": "rollup -c && node ./dist/index",
         "prepare": "husky install"
     },
     "keywords": [
@@ -65,6 +65,7 @@
         ]
     },
     "dependencies": {
+        "adm-zip": "^0.5.12",
         "inquirer": "^9.2.8",
         "ora": "^6.3.1"
     }

@@ -9,7 +9,7 @@
     "scripts": {
         "lint": "eslint . --fix",
         "build": "rollup -c",
-        "dev": "rollup -c && node ./lib/index",
+        "dev": "rollup -c && node ./dist/index",
         "prepare": "husky install"
     },
     "devDependencies": {

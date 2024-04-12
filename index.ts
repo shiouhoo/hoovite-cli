@@ -12,6 +12,7 @@ import { installAction } from '@/action/installAction';
 import packageFile from './package.json';
 import pkgConfig from './pkg.config';
 import { lintAction } from '@/action/lintAction';
+import AdmZip from 'adm-zip';
 
 const init = async () => {
     try{
@@ -42,17 +43,12 @@ const init = async () => {
         }
         // 复制模版
         spinner.start();
-        // 如果存在，复制 .gitignore 文件
         const templateDir = path.join(cliPath, `src/template/${templateName}`);
         copy(templateDir, projectPath);
-        try{
-            // pnpm 不需要此操作
-            // 复制 .gitignore 文件
-            fs.copyFileSync(path.join(projectPath, '.npmignore'), path.join(projectPath, '.gitignore'));
-            fs.unlinkSync(path.join(projectPath, '.npmignore'));
-            fs.copyFileSync(path.join(templateDir, '.husky/_/.npmignore'), path.join(projectPath, '.husky/_/.gitignore'));
-            fs.unlinkSync(path.join(projectPath, '.husky/_/.npmignore'));
-        }catch{ /* empty */ }
+
+        // 将husky解压复制到项目目录
+        const zip = new AdmZip(path.join(cliPath, 'src', '.husky.zip'));
+        zip.extractAllTo(projectPath, true);
 
         // 修改 package.json
         const pkg = JSON.parse(
