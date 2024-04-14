@@ -49,6 +49,12 @@ const init = async () => {
         // 将husky解压复制到项目目录
         const zip = new AdmZip(path.join(cliPath, 'src', '.husky.zip'));
         zip.extractAllTo(projectPath, true);
+        try{
+            // pnpm 不需要此操作
+            // npm 会把 .gitignore 文件 重命名为 .npmignore
+            fs.copyFileSync(path.join(projectPath, '.npmignore'), path.join(projectPath, '.gitignore'));
+            fs.unlinkSync(path.join(projectPath, '.npmignore'));
+        }catch{ /* empty */ }
 
         // 修改 package.json
         const pkg = JSON.parse(

@@ -1,6 +1,6 @@
 {
     "name": "create-hoo-vite",
-    "version": "1.2.8",
+    "version": "1.3.0",
     "description": "基于vite + ts的项目模板",
     "scripts": {
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
@@ -25,7 +25,8 @@
     "files": [
         "src/template/**/*",
         "dist",
-        "src/clearDir.js"
+        "src/clearDir.js",
+        "src/.husky.zip"
     ],
     "repository": {
         "type": "git",
