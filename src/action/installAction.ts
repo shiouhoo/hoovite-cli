@@ -8,7 +8,6 @@ import os from 'os';
 export const installAction = async (__dirPath:string, way:string) => {
     return new Promise((resolve) => {
 
-        if(way === '不需要') {resolve(null);return;}
         let cmd = '';
         switch (way) {
         case 'npm': cmd = 'npm install';break;

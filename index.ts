@@ -84,11 +84,14 @@ const init = async () => {
         // 初始化 git
         await gitAction(projectPath);
 
-        // 安装包
-        await installAction(projectPath, option.autoInstall);
+        if(option.autoInstall !== '不需要') {
 
-        // lint
-        lintAction(projectPath);
+            // 安装包
+            await installAction(projectPath, option.autoInstall);
+
+            // lint
+            lintAction(projectPath);
+        }
 
         // eslint-disable-next-line no-console
         console.log('下载成功');
