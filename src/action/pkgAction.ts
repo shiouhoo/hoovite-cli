@@ -21,7 +21,7 @@ export function unocssAction(pkg:Record<string, any>, cliPath:string, projectPat
 
 export function unocssElectronAction(pkg:Record<string, any>, cliPath:string, projectPath: string, viteConfig: string, mainFile: string, importReplace: string): Record<string, string> {
     ({ viteConfig, mainFile } = unocssAction(pkg, cliPath, projectPath, viteConfig, mainFile, importReplace));
-    viteConfig = viteConfig.replace('vue(),\r\nUnoCSS(),', 'vue(),\r\nUnoCSS(),');
+    viteConfig = viteConfig.replace('vue(),\r\nUnoCSS(),', 'vue(),\r\n\t\t\tUnoCSS(),');
     return {
         viteConfig,
         mainFile
