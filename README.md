@@ -33,6 +33,12 @@ node项目
 
 - 必选：eslint，commitlint，husky，lint-staged
 
+#### node-web
+
+如果你只要用node+js做一个小玩意儿，不需要提交，这个模板是最适合你的，另外还加入web，方便在其他设备上使用
+
+- 必选：eslint
+
 ## 反馈
 
 如果你有更好的建议或意见，欢迎向我们提Issues。
